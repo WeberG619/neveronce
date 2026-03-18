@@ -47,8 +47,7 @@ def _get_mem() -> Memory:
 
 mcp = FastMCP(
     "recal",
-    version="0.1.0",
-    description="Persistent, correctable memory for AI. The memory layer that learns from mistakes.",
+    instructions="Persistent, correctable memory for AI. The memory layer that learns from mistakes.",
 )
 
 
