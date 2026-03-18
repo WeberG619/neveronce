@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "kova"
+version = "0.1.0"
+description = "Persistent, correctable memory for AI. The memory layer that learns from mistakes."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Weber Gouin", email = "weber@bimopsstudio.com" },
+]
+keywords = ["ai", "memory", "llm", "mcp", "agents", "corrections"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.optional-dependencies]
+mcp = ["mcp>=1.0.0"]
+
+[project.urls]
+Homepage = "https://github.com/webergouin/kova"
+Repository = "https://github.com/webergouin/kova"
+Issues = "https://github.com/webergouin/kova/issues"
+
+[project.scripts]
+kova = "kova.server:main"
+
+[tool.setuptools.packages.find]
+include = ["kova*"]
