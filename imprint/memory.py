@@ -1,7 +1,7 @@
-"""Recal — The public API.
+"""Imprint — The public API.
 
 Usage:
-    from recal import Memory
+    from imprint import Memory
 
     mem = Memory("my_app")
     mem.store("user prefers dark mode", tags=["preference"])
@@ -12,21 +12,21 @@ Usage:
 from __future__ import annotations
 
 from pathlib import Path
-from .db import RecalDB
+from .db import ImprintDB
 
 
 class Memory:
     """Persistent, correctable AI memory.
 
     Args:
-        name: Name for this memory store (creates ~/.recal/<name>.db)
+        name: Name for this memory store (creates ~/.imprint/<name>.db)
         db_dir: Custom directory for the database file.
         namespace: Default namespace for organizing memories.
     """
 
     def __init__(self, name: str = "default", db_dir: str | Path | None = None,
                  namespace: str = "default"):
-        self.db = RecalDB(name=name, db_dir=db_dir)
+        self.db = ImprintDB(name=name, db_dir=db_dir)
         self.namespace = namespace
 
     def store(self, content: str, *, tags: list[str] | None = None,

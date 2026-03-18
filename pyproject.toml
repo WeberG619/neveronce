@@ -3,7 +3,7 @@ requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "recal"
+name = "imprint"
 version = "0.1.0"
 description = "Persistent, correctable memory for AI. The memory layer that learns from mistakes."
 readme = "README.md"
@@ -12,7 +12,7 @@ requires-python = ">=3.10"
 authors = [
     { name = "Weber Gouin", email = "weber@bimopsstudio.com" },
 ]
-keywords = ["ai", "memory", "llm", "mcp", "agents", "corrections"]
+keywords = ["ai", "memory", "llm", "mcp", "agents", "corrections", "imprint"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -29,12 +29,12 @@ classifiers = [
 mcp = ["mcp>=1.0.0"]
 
 [project.urls]
-Homepage = "https://github.com/WeberG619/recal"
-Repository = "https://github.com/WeberG619/recal"
-Issues = "https://github.com/WeberG619/recal/issues"
+Homepage = "https://github.com/WeberG619/imprint"
+Repository = "https://github.com/WeberG619/imprint"
+Issues = "https://github.com/WeberG619/imprint/issues"
 
 [project.scripts]
-recal = "recal.server:main"
+imprint = "imprint.server:main"
 
 [tool.setuptools.packages.find]
-include = ["recal*"]
+include = ["imprint*"]

@@ -1,15 +1,15 @@
-"""Recal MCP Server — Plug memory into any MCP-compatible AI.
+"""Imprint MCP Server — Plug memory into any MCP-compatible AI.
 
 Run:
-    python -m recal.server
-    python -m recal.server --name my_app --port 0
+    python -m imprint.server
+    python -m imprint.server --name my_app --port 0
 
 Or add to your MCP config:
     {
         "mcpServers": {
-            "recal": {
+            "imprint": {
                 "command": "python",
-                "args": ["-m", "recal.server"]
+                "args": ["-m", "imprint.server"]
             }
         }
     }
@@ -26,7 +26,7 @@ try:
 except ImportError:
     print(
         "MCP server requires the 'mcp' package.\n"
-        "Install it with: pip install recal[mcp]\n"
+        "Install it with: pip install imprint[mcp]\n"
         "Or: pip install mcp",
         file=sys.stderr,
     )
@@ -41,12 +41,12 @@ _mem: Memory | None = None
 def _get_mem() -> Memory:
     global _mem
     if _mem is None:
-        _mem = Memory("recal")
+        _mem = Memory("imprint")
     return _mem
 
 
 mcp = FastMCP(
-    "recal",
+    "imprint",
     instructions="Persistent, correctable memory for AI. The memory layer that learns from mistakes.",
 )
 
@@ -145,7 +145,7 @@ def check(planned_action: str, namespace: str = "default") -> str:
 def helped(memory_id: int, did_help: bool) -> str:
     """Mark whether a surfaced memory actually helped.
 
-    This feedback loop is what makes Recal learn.
+    This feedback loop is what makes Imprint learn.
     Helpful memories get stronger. Unhelpful ones decay.
 
     Args:
@@ -184,9 +184,9 @@ def stats() -> str:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Recal MCP Server")
-    parser.add_argument("--name", default="recal",
-                        help="Memory store name (default: recal)")
+    parser = argparse.ArgumentParser(description="Imprint MCP Server")
+    parser.add_argument("--name", default="imprint",
+                        help="Memory store name (default: imprint)")
     parser.add_argument("--namespace", default="default",
                         help="Default namespace")
     args = parser.parse_args()

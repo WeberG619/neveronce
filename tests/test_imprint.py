@@ -1,10 +1,10 @@
-"""Tests for Recal."""
+"""Tests for Imprint."""
 
 import tempfile
 import os
 from pathlib import Path
 
-from recal import Memory
+from imprint import Memory
 
 
 def _tmp_mem(name="test"):

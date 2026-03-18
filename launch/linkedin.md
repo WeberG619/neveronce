@@ -14,7 +14,7 @@ A 1M token context window isn't memory. It's short-term recall that dies when th
 
 I decided to fix it myself.
 
-For the last 3 months, I've been running persistent memory on my AI workflows. Every correction I make gets stored permanently. Every time the AI surfaces a memory that helps, it gets stronger. Every memory that doesn't help fades away.
+For the last 4 months, I've been running persistent memory on my AI workflows. Every correction I make gets stored permanently. Every time the AI surfaces a memory that helps, it gets stronger. Every memory that doesn't help fades away.
 
 1,421 memories. 87 corrections. 4 months of daily use. My most-used correction has been surfaced 491 times — and the AI hasn't repeated that mistake once since the day I corrected it.
 
@@ -22,9 +22,9 @@ The result? I correct it once — it never makes that mistake again. Not in the 
 
 They gave us MCP for free. They gave us agents for free. So I'm giving away the missing piece — for free too.
 
-Today I'm open-sourcing Recal — a lightweight memory layer any developer can plug into any AI application.
+Today I'm open-sourcing Imprint — a lightweight memory layer any developer can plug into any AI application.
 
-The core idea is simple. Most memory systems do two things: store and recall. Recal does five:
+The core idea is simple. Most memory systems do two things: store and recall. Imprint does five:
 
 Store → Recall → Correct → Feedback → Decay
 
@@ -42,15 +42,15 @@ Link in comments.
 
 ## First Comment (post immediately after)
 
-GitHub: https://github.com/WeberG619/recal
+GitHub: https://github.com/WeberG619/imprint
 
 Quick start:
 ```
-pip install recal
+pip install imprint
 ```
 
 ```python
-from recal import Memory
+from imprint import Memory
 mem = Memory("my_app")
 mem.correct("never do X, always do Y")
 mem.recall("how should I do this?")  # correction surfaces first

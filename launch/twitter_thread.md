@@ -8,7 +8,7 @@ Every AI agent has amnesia.
 
 You correct it Monday. Tuesday — same mistake.
 
-I fixed this 3 months ago. Today I'm open-sourcing it.
+I fixed this 4 months ago. Today I'm open-sourcing it.
 
 Thread:
 
@@ -30,7 +30,7 @@ A 1M context window is not memory. It's short-term recall that vanishes when the
 
 **Tweet 3 (what you built)**
 
-3 months ago I built a persistent memory system for my AI workflows.
+4 months ago I built a persistent memory system for my AI workflows.
 
 Every correction I make gets stored permanently.
 Every helpful memory gets stronger.
@@ -64,7 +64,7 @@ You correct the AI once — it's permanent.
 
 **Tweet 5 (the product)**
 
-Today I'm releasing Recal — the memory layer that learns from mistakes.
+Today I'm releasing Imprint — the memory layer that learns from mistakes.
 
 - 400 lines of Python
 - Zero dependencies (just SQLite)
@@ -72,7 +72,7 @@ Today I'm releasing Recal — the memory layer that learns from mistakes.
 - MCP server included (Claude Code, Cursor, etc.)
 - MIT licensed
 
-https://github.com/WeberG619/recal
+https://github.com/WeberG619/imprint
 
 ---
 
@@ -81,7 +81,7 @@ https://github.com/WeberG619/recal
 5 lines of code:
 
 ```python
-from recal import Memory
+from imprint import Memory
 mem = Memory("my_app")
 mem.store("user prefers metric")
 mem.correct("never use imperial units")
@@ -98,10 +98,10 @@ The future of AI isn't just smarter models.
 
 It's models that learn from their mistakes.
 
-I'm building that future. Recal is step one.
+I'm building that future. Imprint is step one.
 
 If you're building AI agents and tired of starting from zero every session — try it.
 
-GitHub: https://github.com/WeberG619/recal
+GitHub: https://github.com/WeberG619/imprint
 
 ---

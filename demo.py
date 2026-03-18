@@ -1,18 +1,18 @@
-"""Recal Demo — Run this to see persistent, correctable AI memory in action.
+"""Imprint Demo — Run this to see persistent, correctable AI memory in action.
 
 Usage:
-    pip install recal
+    pip install imprint
     python demo.py
 """
 
-from recal import Memory
+from imprint import Memory
 
 print("=" * 60)
-print("  RECAL — Persistent, Correctable Memory for AI")
+print("  IMPRINT — Persistent, Correctable Memory for AI")
 print("  The memory layer that learns from mistakes.")
 print("=" * 60)
 
-# Create a memory store (stored at ~/.recal/demo.db)
+# Create a memory store (stored at ~/.imprint/demo.db)
 mem = Memory("demo")
 
 # --- STEP 1: Store memories ---
@@ -76,10 +76,10 @@ print(f"    Correction still there: {'YES' if any(r['memory_type'] == 'correctio
 mem2.close()
 
 print("\n" + "=" * 60)
-print("  Your memories are saved at ~/.recal/demo.db")
+print("  Your memories are saved at ~/.imprint/demo.db")
 print("  They persist across sessions. Corrections never decay.")
-print("  That's Recal. Memory that learns from mistakes.")
+print("  That's Imprint. Memory that learns from mistakes.")
 print("=" * 60)
-print("\n  GitHub: https://github.com/WeberG619/recal")
-print("  PyPI:   pip install recal")
+print("\n  GitHub: https://github.com/WeberG619/imprint")
+print("  PyPI:   pip install imprint")
 print()
