@@ -1,11 +1,15 @@
-# Recal
+<p align="center">
+  <img src="assets/logo.png" alt="Recal" width="400">
+</p>
 
-[![Tests](https://github.com/WeberG619/recal/actions/workflows/test.yml/badge.svg)](https://github.com/WeberG619/recal/actions)
-[![PyPI](https://img.shields.io/pypi/v/recal)](https://pypi.org/project/recal/)
-[![Python](https://img.shields.io/pypi/pyversions/recal)](https://pypi.org/project/recal/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<p align="center">
+  <a href="https://github.com/WeberG619/recal/actions"><img src="https://github.com/WeberG619/recal/actions/workflows/test.yml/badge.svg" alt="Tests"></a>
+  <a href="https://pypi.org/project/recal/"><img src="https://img.shields.io/pypi/v/recal" alt="PyPI"></a>
+  <a href="https://pypi.org/project/recal/"><img src="https://img.shields.io/pypi/pyversions/recal" alt="Python"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+</p>
 
-**Persistent, correctable memory for AI. The memory layer that learns from mistakes.**
+<p align="center"><strong>Persistent, correctable memory for AI. The memory layer that learns from mistakes.</strong></p>
 
 **Free. Open source. Zero dependencies. Works with any LLM.**
 
