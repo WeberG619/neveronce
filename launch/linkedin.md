@@ -20,7 +20,9 @@ For the last 3 months, I've been running persistent memory on my AI workflows. E
 
 The result? I correct it once — it never makes that mistake again. Not in the next session. Not ever.
 
-Today I'm open-sourcing this as Kova — a lightweight memory layer any developer can plug into any AI application.
+They gave us MCP for free. They gave us agents for free. So I'm giving away the missing piece — for free too.
+
+Today I'm open-sourcing Kova — a lightweight memory layer any developer can plug into any AI application.
 
 The core idea is simple. Most memory systems do two things: store and recall. Kova does five:
 

@@ -9,7 +9,7 @@ Every AI agent has amnesia. You correct it on Monday, it makes the same mistake 
 
 I've been running persistent memory on my AI workflows for 4 months. 1,421 memories, 87 corrections, daily use across 11 memory types. My most-used correction has been surfaced 491 times — and the AI hasn't repeated that mistake since the day I stored it.
 
-Today I'm open-sourcing the core as Kova — a 400-line Python library with zero dependencies (just SQLite).
+MCP is free. Agents are free. The missing piece — memory that learns from mistakes — should be free too. Today I'm open-sourcing it as Kova — a 400-line Python library with zero dependencies (just SQLite).
 
 **What makes it different from Mem0, Engram, etc.:**
 

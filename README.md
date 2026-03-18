@@ -2,6 +2,10 @@
 
 **Persistent, correctable memory for AI. The memory layer that learns from mistakes.**
 
+**Free. Open source. Zero dependencies. Works with any LLM.**
+
+They gave us MCP for free. They gave us agents for free. Now here's the missing piece — **memory that actually learns** — for free too.
+
 Every AI agent forgets everything when the session ends. Kova gives them a brain that persists — and more importantly, a brain that **learns from corrections** so the same mistake never happens twice.
 
 ## Why Kova?
