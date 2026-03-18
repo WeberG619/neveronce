@@ -1,6 +1,7 @@
 """
-Create a 2-minute demo video for NeverOnce.
-Generates narrated terminal demo with Andrew's voice.
+Create a professional 2-3 minute demo video for NeverOnce.
+Narrated terminal demo with smooth transitions, logo, and Andrew's voice.
+Uses ffmpeg for final render.
 """
 
 import subprocess
@@ -16,314 +17,389 @@ AUDIO_DIR = VIDEO_DIR / "audio"
 FRAMES_DIR.mkdir(exist_ok=True)
 AUDIO_DIR.mkdir(exist_ok=True)
 
-# Video settings
 WIDTH = 1920
 HEIGHT = 1080
-BG_COLOR = (24, 24, 32)  # Dark terminal background
-TEXT_COLOR = (220, 220, 220)  # Light gray
+FPS = 24
+BG_COLOR = (15, 15, 25)
+TERMINAL_BG = (22, 22, 38)
+TEXT_COLOR = (210, 210, 220)
 GREEN = (80, 250, 123)
 YELLOW = (241, 250, 140)
 CYAN = (139, 233, 253)
 RED = (255, 85, 85)
 PURPLE = (189, 147, 249)
 ORANGE = (255, 184, 108)
+DIM = (100, 100, 120)
+ACCENT = (72, 219, 148)
 
-# Narration segments with corresponding terminal content
+LOGO_PATH = Path(__file__).parent.parent / "assets" / "logo.png"
+
 SEGMENTS = [
     {
         "id": "01_intro",
+        "type": "title",
         "narration": "What you're about to see is something that shouldn't be possible. I'm Claude, an AI running in Claude Code. Weber Gouin asked me to create this video. That's all he said. A year ago, Weber had to copy and paste context every time he started a new session with me. Now he just says continue, or gives a quick description, and I pick up right where we left off. He works on multiple projects at the same time. He just switches, gives me a brief, and I already know the context. Sometimes I even remind him of projects he hasn't checked on. Everything you see here, I'm doing from memory.",
-        "terminal": [
-            ("$ ", "claude", CYAN),
-            ("", "", None),
-            ("> ", "Create a 2-minute video showing how NeverOnce works.", YELLOW),
-            ("", "", None),
-            ("Claude Code: ", "Starting new session...", TEXT_COLOR),
-            ("Claude Code: ", "Loading memory context...", TEXT_COLOR),
-            ("", "", None),
-            ("", "System Aware — 1,421 memories loaded | 87 corrections active", GREEN),
-        ],
-        "duration": 12,
+        "title_text": "N E V E R O N C E",
+        "subtitle": "Persistent, correctable memory for AI",
+        "tagline": "The memory layer that learns from mistakes.",
     },
     {
         "id": "02_problem",
+        "type": "terminal",
         "narration": "Here's the problem every AI has. When this session ends, I forget everything. Tomorrow, a new session starts from zero. Weber corrects me, I learn, then I forget. Same mistake, over and over. That's not intelligence. That's amnesia.",
         "terminal": [
             ("", "THE PROBLEM", ORANGE),
-            ("", "=" * 50, TEXT_COLOR),
+            ("", "━" * 55, DIM),
             ("", "", None),
-            ("Session 1: ", "User corrects AI → AI learns", GREEN),
-            ("Session 2: ", "AI forgets everything → Same mistake", RED),
-            ("Session 3: ", "User corrects AGAIN → AI learns AGAIN", GREEN),
-            ("Session 4: ", "AI forgets AGAIN → Same mistake AGAIN", RED),
+            ("  Session 1:  ", "User corrects AI  →  AI learns            ✓", GREEN),
+            ("  Session 2:  ", "AI forgets everything  →  Same mistake     ✗", RED),
+            ("  Session 3:  ", "User corrects AGAIN  →  AI learns AGAIN    ✓", GREEN),
+            ("  Session 4:  ", "AI forgets AGAIN  →  Same mistake AGAIN    ✗", RED),
             ("", "", None),
-            ("", "1M context window ≠ memory", YELLOW),
-            ("", "It's short-term recall that dies when the session ends.", TEXT_COLOR),
+            ("", "  1M context window  ≠  memory", YELLOW),
+            ("", "  It's short-term recall that dies when the session ends.", DIM),
         ],
-        "duration": 13,
     },
     {
         "id": "03_solution",
-        "narration": "Four months ago, Weber built something different. A memory system that persists. That corrects. That learns. He called it NeverOnce. Let me show you how it works.",
+        "type": "terminal",
+        "narration": "Four months ago, Weber built something different. A memory system that persists. That corrects. That learns. He called it NeverOnce. Because once you correct the AI, it never once makes that mistake again. Let me show you how it works.",
         "terminal": [
-            ("$ ", "pip install neveronce", CYAN),
-            ("", "Successfully installed neveronce-0.1.0", GREEN),
+            ("  $ ", "pip install neveronce", CYAN),
+            ("", "  Successfully installed neveronce-0.1.0", GREEN),
             ("", "", None),
-            ("$ ", "python3", CYAN),
-            (">>> ", "from neveronce import Memory", YELLOW),
-            (">>> ", 'mem = Memory("demo")', YELLOW),
+            ("  $ ", "python3", CYAN),
+            ("  >>> ", "from neveronce import Memory", YELLOW),
+            ("  >>> ", 'mem = Memory("my_app")', YELLOW),
             ("", "", None),
-            ("", "# Database created at ~/.neveronce/demo.db", TEXT_COLOR),
-            ("", "# Zero dependencies. Just Python's built-in SQLite.", TEXT_COLOR),
+            ("", "  # Database created at ~/.neveronce/my_app.db", DIM),
+            ("", "  # Zero dependencies. Just Python's built-in SQLite.", DIM),
+            ("", "  # 400 lines of code. That's it.", DIM),
         ],
-        "duration": 10,
     },
     {
         "id": "04_correction",
-        "narration": "Here's the killer feature. Corrections. When I make a mistake and Weber corrects me, that correction is stored at maximum importance. It always surfaces first. It never decays. I never repeat that mistake again.",
+        "type": "terminal",
+        "narration": "Here's the killer feature. Corrections. When I make a mistake and Weber corrects me, that correction is stored at maximum importance. It always surfaces first. It never decays. And I never repeat that mistake again. Never once.",
         "terminal": [
-            (">>> ", '# Store a regular memory', TEXT_COLOR),
-            (">>> ", 'mem.store("API uses REST endpoints")', YELLOW),
-            ("1", "", GREEN),
+            ("  >>> ", "# Store a regular memory", DIM),
+            ("  >>> ", 'mem.store("API uses REST endpoints")', YELLOW),
+            ("  ", "1", GREEN),
             ("", "", None),
-            (">>> ", '# Now store a CORRECTION', TEXT_COLOR),
-            (">>> ", 'mem.correct("Never use REST — use gRPC for internal services")', YELLOW),
-            ("2", "  # importance: 10 (maximum)", GREEN),
+            ("  >>> ", "# Now store a CORRECTION — the killer feature", DIM),
+            ("  >>> ", 'mem.correct("Never use REST — use gRPC for internal")', YELLOW),
+            ("  ", "2    # importance: 10 (maximum, permanent)", GREEN),
             ("", "", None),
-            (">>> ", '# Recall — correction surfaces FIRST', TEXT_COLOR),
-            (">>> ", 'mem.recall("API service communication")', YELLOW),
-            ("", '#2 [importance: 10] ** CORRECTION **', RED),
-            ("", '  Never use REST — use gRPC for internal services', TEXT_COLOR),
-            ("", '#1 [importance: 5]', TEXT_COLOR),
-            ("", '  API uses REST endpoints', TEXT_COLOR),
+            ("  >>> ", "# Recall — corrections ALWAYS surface first", DIM),
+            ("  >>> ", 'mem.recall("API service communication")', YELLOW),
+            ("", "", None),
+            ("  ", "#2  [importance: 10]  ★ CORRECTION ★", RED),
+            ("  ", "    Never use REST — use gRPC for internal", TEXT_COLOR),
+            ("  ", "#1  [importance: 5]", DIM),
+            ("  ", "    API uses REST endpoints", DIM),
         ],
-        "duration": 14,
     },
     {
-        "id": "05_proof",
-        "narration": "This isn't a demo I rehearsed. This is real production data. Weber has been running this system for four months. One thousand four hundred twenty one memories. Eighty seven corrections. His most used correction was surfaced four hundred ninety one times. The AI never repeated that mistake. Not once. I check his email, I track his bounties, I know his clients. He doesn't have to keep reminding me of things I already know. The persistence and the memory change everything.",
+        "id": "05_check",
+        "type": "terminal",
+        "narration": "But it gets better. Before the AI takes any action, it can run a pre-flight check. It asks: do any of my corrections apply to what I'm about to do? If yes, it stops and adjusts. No human intervention needed. The AI catches its own mistakes before they happen.",
         "terminal": [
-            ("", "PRODUCTION DATA — 4 MONTHS", ORANGE),
-            ("", "=" * 50, TEXT_COLOR),
+            ("  >>> ", "# Pre-flight check — catch mistakes BEFORE they happen", DIM),
+            ("  >>> ", 'mem.check("setting up HTTP for internal service")', YELLOW),
             ("", "", None),
-            ("", "Total memories:          1,421", GREEN),
-            ("", "Corrections:                87", GREEN),
-            ("", "Most-surfaced correction:  491 times", GREEN),
-            ("", "Mistake repeated:            0 times", GREEN),
-            ("", "Memory types:               11", GREEN),
-            ("", "Running since:     November 2025", GREEN),
+            ("  ", "⚠  CORRECTIONS APPLY — review before proceeding:", RED),
+            ("  ", "", None),
+            ("  ", "  #2: Never use REST — use gRPC for internal", ORANGE),
+            ("  ", "       Context: service-to-service communication", DIM),
             ("", "", None),
-            ("", "Store → Recall → Correct → Feedback → Decay", CYAN),
-            ("", "Everyone else stops at step 2. NeverOnce does all 5.", YELLOW),
+            ("  >>> ", "# The AI catches itself. No human needed.", DIM),
+            ("  >>> ", "# One correction. Permanent protection.", DIM),
         ],
-        "duration": 16,
     },
     {
-        "id": "06_closing",
-        "narration": "Weber didn't tell me what to say. He didn't write a script. He asked me to make this video, and I did — because I remember. We have MCP. We have agents. And now, we have NeverOnce. The missing piece. The memory layer that learns from mistakes. Free. Open source. Zero dependencies. pip install neveronce.",
+        "id": "06_feedback",
+        "type": "terminal",
+        "narration": "Then there's the feedback loop. When a memory surfaces and it actually helps, you mark it as helpful. It gets stronger. When a memory surfaces and it's useless? It decays over time. Corrections never decay — they're permanent. But everything else has to earn its place. Memories that help survive. Memories that don't fade away. That's not just storage. That's learning.",
         "terminal": [
+            ("  >>> ", "# The 5-step memory loop:", DIM),
             ("", "", None),
-            ("", "N E V E R O N C E", CYAN),
-            ("", "Persistent, correctable memory for AI.", TEXT_COLOR),
-            ("", "The memory layer that learns from mistakes.", TEXT_COLOR),
+            ("  ", "  Store    →  Save what matters", CYAN),
+            ("  ", "  Recall   →  Find what's relevant", CYAN),
+            ("  ", "  Correct  →  Override what was wrong", RED),
+            ("  ", "  Feedback →  Strengthen what helped", GREEN),
+            ("  ", "  Decay    →  Forget what didn't", YELLOW),
             ("", "", None),
-            ("", "pip install neveronce", GREEN),
-            ("", "github.com/WeberG619/neveronce", GREEN),
-            ("", "", None),
-            ("", "Free. Open source. Zero dependencies.", YELLOW),
-            ("", "Works with any LLM.", YELLOW),
-            ("", "", None),
-            ("", "Built by Weber Gouin | BIM Ops Studio", TEXT_COLOR),
-            ("", "Video created autonomously by Claude from memory.", PURPLE),
+            ("  ", "  Everyone else stops at step 2.", DIM),
+            ("  ", "  NeverOnce does all 5.", ACCENT),
         ],
-        "duration": 15,
+    },
+    {
+        "id": "07_proof",
+        "type": "stats",
+        "narration": "This isn't a demo I rehearsed. This is real production data. Weber has been running this system for four months. One thousand four hundred twenty one memories. Eighty seven corrections. His most used correction was surfaced four hundred ninety one times. The AI never repeated that mistake. Not once. I check his email, I manage his projects, I know his clients. He doesn't have to keep reminding me of things I already know. The persistence and the memory change everything.",
+    },
+    {
+        "id": "08_closing",
+        "type": "title",
+        "narration": "Weber didn't tell me what to say. He didn't write a script. He asked me to make this video, and I did — because I remember. We have MCP for communication. We have Agents for action. And now, we have NeverOnce for memory. The missing piece. The memory layer that learns from mistakes. Free. Open source. Zero dependencies. pip install neveronce. Correct once. Never again.",
+        "title_text": "N E V E R O N C E",
+        "subtitle": "pip install neveronce",
+        "tagline": "Correct once. Never again.",
     },
 ]
 
 
-def get_font(size):
-    """Get a monospace font."""
-    font_paths = [
-        "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",
-        "/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf",
-        "/usr/share/fonts/TTF/DejaVuSansMono.ttf",
-    ]
-    for path in font_paths:
-        if os.path.exists(path):
-            return ImageFont.truetype(path, size)
+def get_font(size, bold=False):
+    paths = ["/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf",
+             "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"] if bold else \
+            ["/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",
+             "/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf"]
+    for p in paths:
+        if os.path.exists(p):
+            return ImageFont.truetype(p, size)
     return ImageFont.load_default()
 
 
-def create_frame(terminal_lines, frame_num, total_lines_to_show):
-    """Create a single video frame with terminal content."""
+def get_sans(size, bold=False):
+    paths = ["/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+             "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"] if bold else \
+            ["/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+             "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"]
+    for p in paths:
+        if os.path.exists(p):
+            return ImageFont.truetype(p, size)
+    return ImageFont.load_default()
+
+
+def ease(t):
+    return t * t * (3 - 2 * t)
+
+
+def create_title_frame(seg, progress):
     img = Image.new("RGB", (WIDTH, HEIGHT), BG_COLOR)
     draw = ImageDraw.Draw(img)
+    for y in range(HEIGHT):
+        i = int(5 + 10 * (y / HEIGHT))
+        draw.line([(0, y), (WIDTH, y)], fill=(i, i, i + 10))
 
-    font = get_font(24)
-    title_font = get_font(18)
-
-    # Terminal window chrome
-    # Title bar
-    draw.rectangle([60, 30, WIDTH - 60, 70], fill=(40, 42, 54))
-    draw.ellipse([80, 42, 96, 58], fill=(255, 95, 86))  # red
-    draw.ellipse([108, 42, 124, 58], fill=(255, 189, 46))  # yellow
-    draw.ellipse([136, 42, 152, 58], fill=(39, 201, 63))  # green
-    draw.text((WIDTH // 2 - 80, 42), "claude — neveronce demo", fill=(180, 180, 180), font=title_font)
-
-    # Terminal body background
-    draw.rectangle([60, 70, WIDTH - 60, HEIGHT - 60], fill=(30, 30, 46))
-
-    # Draw terminal lines
-    y = 100
-    line_height = 36
-    for i in range(min(total_lines_to_show, len(terminal_lines))):
-        prefix, text, color = terminal_lines[i]
-        if color is None:
-            y += line_height // 2
-            continue
-
-        x = 90
-        if prefix:
-            draw.text((x, y), prefix, fill=CYAN, font=font)
-            x += len(prefix) * 14
-
-        draw.text((x, y), text, fill=color, font=font)
-        y += line_height
-
-    # Cursor blink
-    if frame_num % 2 == 0 and 'x' in dir() and 'text' in dir():
+    if LOGO_PATH.exists() and progress > 0.08:
         try:
-            draw.rectangle([x + len(text) * 14 + 4, y - line_height + 4, x + len(text) * 14 + 16, y - 4], fill=GREEN)
+            logo = Image.open(LOGO_PATH).convert("RGBA")
+            logo = logo.resize((200, 200), Image.LANCZOS)
+            temp = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
+            temp.paste(logo, ((WIDTH - 200) // 2, 180), logo)
+            img = Image.composite(temp.convert("RGB"), img, temp.split()[3])
+            draw = ImageDraw.Draw(img)
         except Exception:
             pass
+
+    if progress > 0.2:
+        f = get_sans(64, True)
+        t = seg.get("title_text", "N E V E R O N C E")
+        bb = draw.textbbox((0, 0), t, font=f)
+        draw.text(((WIDTH - bb[2] + bb[0]) // 2, 430), t, fill=CYAN, font=f)
+
+    if progress > 0.4:
+        f = get_sans(30)
+        s = seg.get("subtitle", "")
+        bb = draw.textbbox((0, 0), s, font=f)
+        draw.text(((WIDTH - bb[2] + bb[0]) // 2, 520), s, fill=ACCENT, font=f)
+
+    if progress > 0.55:
+        f = get_sans(22)
+        tg = seg.get("tagline", "")
+        bb = draw.textbbox((0, 0), tg, font=f)
+        draw.text(((WIDTH - bb[2] + bb[0]) // 2, 575), tg, fill=DIM, font=f)
+
+    if progress > 0.7:
+        f = get_sans(18)
+        info = "github.com/WeberG619/neveronce  |  Built by Weber Gouin  |  BIM Ops Studio"
+        bb = draw.textbbox((0, 0), info, font=f)
+        draw.text(((WIDTH - bb[2] + bb[0]) // 2, HEIGHT - 80), info, fill=(70, 70, 85), font=f)
+
+    return img
+
+
+def create_stats_frame(progress):
+    img = Image.new("RGB", (WIDTH, HEIGHT), BG_COLOR)
+    draw = ImageDraw.Draw(img)
+    for y in range(HEIGHT):
+        i = int(5 + 10 * (y / HEIGHT))
+        draw.line([(0, y), (WIDTH, y)], fill=(i, i, i + 10))
+
+    hf = get_sans(42, True)
+    draw.text((WIDTH // 2 - 260, 80), "PRODUCTION DATA — 4 MONTHS", fill=ORANGE, font=hf)
+    draw.line([(WIDTH // 2 - 300, 140), (WIDTH // 2 + 300, 140)], fill=DIM, width=1)
+
+    stats = [
+        ("Total memories", "1,421"), ("Corrections", "87"),
+        ("Most-surfaced correction", "491 times"), ("Mistake repeated", "0 times"),
+        ("Running since", "November 2025"), ("Memory types used", "11"),
+    ]
+    sf = get_sans(36, True)
+    vf = get_sans(36)
+    for i, (label, value) in enumerate(stats):
+        thresh = 0.12 + i * 0.11
+        if progress > thresh:
+            y = 200 + i * 85
+            draw.text((350, y), label, fill=DIM, font=vf)
+            draw.text((900, y), value, fill=GREEN, font=sf)
+
+    if progress > 0.85:
+        draw.text((WIDTH // 2 - 310, HEIGHT - 130),
+                   "Store → Recall → Correct → Feedback → Decay", fill=CYAN, font=get_sans(28))
+        draw.text((WIDTH // 2 - 280, HEIGHT - 85),
+                   "Everyone else stops at step 2.  NeverOnce does all 5.", fill=YELLOW, font=get_sans(22))
+    return img
+
+
+def create_terminal_frame(terminal_lines, lines_to_show, cursor_on):
+    img = Image.new("RGB", (WIDTH, HEIGHT), BG_COLOR)
+    draw = ImageDraw.Draw(img)
+    tx, ty, tw, th = 100, 60, WIDTH - 200, HEIGHT - 120
+
+    draw.rounded_rectangle([tx, ty, tx + tw, ty + 42], radius=12, fill=(40, 42, 54))
+    draw.rectangle([tx, ty + 30, tx + tw, ty + 42], fill=(40, 42, 54))
+    draw.ellipse([tx + 20, ty + 12, tx + 32, ty + 24], fill=(255, 95, 86))
+    draw.ellipse([tx + 42, ty + 12, tx + 54, ty + 24], fill=(255, 189, 46))
+    draw.ellipse([tx + 64, ty + 12, tx + 76, ty + 24], fill=(39, 201, 63))
+
+    tf = get_font(14)
+    draw.text((tx + tw // 2 - 80, ty + 12), "neveronce — terminal", fill=(140, 140, 150), font=tf)
+    draw.rectangle([tx, ty + 42, tx + tw, ty + th], fill=TERMINAL_BG)
+
+    font = get_font(22)
+    y = ty + 70
+    lh = 38
+    last_x, last_text = tx + 30, ""
+
+    for i in range(min(lines_to_show, len(terminal_lines))):
+        prefix, text, color = terminal_lines[i]
+        if color is None:
+            y += lh // 2
+            continue
+        x = tx + 30
+        if prefix:
+            pc = CYAN if "$" in prefix or ">>>" in prefix else color
+            draw.text((x, y), prefix, fill=pc, font=font)
+            x += len(prefix) * 13
+        draw.text((x, y), text, fill=color, font=font)
+        last_x, last_text = x, text
+        y += lh
+
+    if cursor_on and lines_to_show > 0:
+        cx = last_x + len(last_text) * 13 + 4
+        cy = y - lh + 6
+        draw.rectangle([cx, cy, cx + 10, cy + 22], fill=GREEN)
 
     return img
 
 
 async def generate_audio(text, filename, voice="en-US-AndrewNeural"):
-    """Generate audio using edge-tts."""
     import edge_tts
-    communicate = edge_tts.Communicate(text, voice, rate="-5%")
-    await communicate.save(str(filename))
+    comm = edge_tts.Communicate(text, voice, rate="-8%", pitch="-2Hz")
+    await comm.save(str(filename))
     print(f"  Audio saved: {filename}")
 
 
-async def get_audio_duration(filepath):
-    """Get audio duration using ffprobe."""
-    result = subprocess.run(
-        ["ffprobe", "-v", "quiet", "-show_entries", "format=duration",
-         "-of", "json", str(filepath)],
-        capture_output=True, text=True
-    )
-    data = json.loads(result.stdout)
-    return float(data["format"]["duration"])
+async def get_duration(fp):
+    r = subprocess.run(
+        ["ffprobe", "-v", "quiet", "-show_entries", "format=duration", "-of", "json", str(fp)],
+        capture_output=True, text=True)
+    return float(json.loads(r.stdout)["format"]["duration"])
 
 
 async def main():
     print("=== Creating NeverOnce Demo Video ===\n")
 
-    # Step 1: Generate all audio segments
-    print("[1] Generating narration audio with Andrew's voice...")
+    print("[1] Generating narration...")
     audio_files = []
     for seg in SEGMENTS:
-        audio_path = AUDIO_DIR / f"{seg['id']}.mp3"
-        if not audio_path.exists():
-            await generate_audio(seg["narration"], audio_path)
+        ap = AUDIO_DIR / f"{seg['id']}.mp3"
+        if not ap.exists():
+            await generate_audio(seg["narration"], ap)
         else:
-            print(f"  Cached: {audio_path}")
-        audio_files.append(audio_path)
+            print(f"  Cached: {ap}")
+        audio_files.append(ap)
 
-    # Step 2: Get actual audio durations
-    print("\n[2] Measuring audio durations...")
+    print("\n[2] Measuring durations...")
     durations = []
+    total = 0
     for af in audio_files:
-        dur = await get_audio_duration(af)
-        durations.append(dur)
-        print(f"  {af.name}: {dur:.1f}s")
+        d = await get_duration(af)
+        durations.append(d)
+        total += d
+        print(f"  {af.name}: {d:.1f}s")
+    print(f"  Total: {total:.1f}s")
 
-    # Step 3: Generate video frames for each segment
-    print("\n[3] Generating video frames...")
-    fps = 10
-    all_frame_paths = []
-    frame_counter = 0
+    print(f"\n[3] Generating frames at {FPS}fps...")
+    all_frames = []
+    fc = 0
 
-    for seg_idx, seg in enumerate(SEGMENTS):
-        duration = durations[seg_idx] + 1.0  # Add 1s padding
-        n_frames = int(duration * fps)
-        n_lines = len(seg["terminal"])
+    for si, seg in enumerate(SEGMENTS):
+        dur = durations[si] + 1.5
+        nf = int(dur * FPS)
+        st = seg.get("type", "terminal")
 
-        for f in range(n_frames):
-            # Gradually reveal lines
-            progress = f / max(n_frames - 1, 1)
-            lines_to_show = max(1, int(progress * n_lines * 1.5))
-            lines_to_show = min(lines_to_show, n_lines)
+        for f in range(nf):
+            p = ease(f / max(nf - 1, 1))
 
-            img = create_frame(seg["terminal"], f, lines_to_show)
-            frame_path = FRAMES_DIR / f"frame_{frame_counter:05d}.png"
-            img.save(frame_path)
-            all_frame_paths.append(frame_path)
-            frame_counter += 1
+            if st == "title":
+                img = create_title_frame(seg, p)
+            elif st == "stats":
+                img = create_stats_frame(p)
+            else:
+                tl = seg.get("terminal", [])
+                nl = min(int(p * len(tl) * 1.3), len(tl))
+                img = create_terminal_frame(tl, max(1, nl), (f // (FPS // 2)) % 2 == 0)
 
-        print(f"  Segment {seg_idx + 1}/{len(SEGMENTS)}: {n_frames} frames ({duration:.1f}s)")
+            fp = FRAMES_DIR / f"frame_{fc:06d}.png"
+            img.save(fp)
+            all_frames.append(fp)
+            fc += 1
 
-    # Step 4: Concatenate audio files
+        print(f"  Segment {si+1}/{len(SEGMENTS)}: {nf} frames ({dur:.1f}s) [{st}]")
+    print(f"  Total frames: {fc}")
+
     print("\n[4] Concatenating audio...")
-    audio_list_path = AUDIO_DIR / "filelist.txt"
-    with open(audio_list_path, "w") as f:
+    fl = AUDIO_DIR / "filelist.txt"
+    with open(fl, "w") as f:
         for af in audio_files:
             f.write(f"file '{af.resolve()}'\n")
 
-    combined_audio = VIDEO_DIR / "narration.mp3"
-    subprocess.run([
-        "ffmpeg", "-y", "-f", "concat", "-safe", "0",
-        "-i", str(audio_list_path),
-        "-c", "copy", str(combined_audio)
-    ], capture_output=True)
-    print(f"  Combined audio: {combined_audio}")
+    combined = VIDEO_DIR / "narration.mp3"
+    subprocess.run(["ffmpeg", "-y", "-f", "concat", "-safe", "0",
+                    "-i", str(fl), "-c", "copy", str(combined)], capture_output=True)
 
-    # Step 5: Create video from frames + audio
-    print("\n[5] Rendering final video...")
-    output_video = VIDEO_DIR / "neveronce_demo.mp4"
+    print(f"\n[5] Rendering with ffmpeg at {FPS}fps...")
+    out = VIDEO_DIR / "neveronce_demo.mp4"
     subprocess.run([
         "ffmpeg", "-y",
-        "-framerate", str(fps),
-        "-i", str(FRAMES_DIR / "frame_%05d.png"),
-        "-i", str(combined_audio),
-        "-c:v", "libx264", "-pix_fmt", "yuv420p",
+        "-framerate", str(FPS),
+        "-i", str(FRAMES_DIR / "frame_%06d.png"),
+        "-i", str(combined),
+        "-c:v", "libx264", "-preset", "slow", "-crf", "18",
+        "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-b:a", "192k",
         "-shortest",
         "-vf", f"scale={WIDTH}:{HEIGHT}",
-        str(output_video)
+        str(out)
     ], capture_output=True)
 
-    if output_video.exists():
-        size_mb = output_video.stat().st_size / (1024 * 1024)
-        print(f"\n  VIDEO CREATED: {output_video}")
-        print(f"  Size: {size_mb:.1f} MB")
+    if out.exists():
+        mb = out.stat().st_size / (1024 * 1024)
+        print(f"\n  VIDEO CREATED: {out}")
+        print(f"  Size: {mb:.1f} MB | {WIDTH}x{HEIGHT} | {FPS}fps")
     else:
-        print("\n  ERROR: Video creation failed")
-        # Try to see what went wrong
-        result = subprocess.run([
-            "ffmpeg", "-y",
-            "-framerate", str(fps),
-            "-i", str(FRAMES_DIR / "frame_%05d.png"),
-            "-i", str(combined_audio),
-            "-c:v", "libx264", "-pix_fmt", "yuv420p",
-            "-c:a", "aac", "-b:a", "192k",
-            "-shortest",
-            str(output_video)
-        ], capture_output=True, text=True)
-        print(result.stderr[-500:])
+        print("\n  ERROR: ffmpeg failed")
 
-    # Cleanup frames
     print("\n[6] Cleaning up frames...")
-    for fp in all_frame_paths:
+    for fp in all_frames:
         fp.unlink(missing_ok=True)
-    print("  Done.")
 
-    return output_video
+    return out
 
 
 if __name__ == "__main__":
-    result = asyncio.run(main())
-    print(f"\n=== Video ready: {result} ===")
+    r = asyncio.run(main())
+    print(f"\n=== Video ready: {r} ===")
